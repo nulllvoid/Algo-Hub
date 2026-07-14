@@ -8,7 +8,7 @@ interface LinkedListVisualizerProps {
   pointerVars?: Record<string, string | number>;
 }
 
-const POINTER_KEYS = ["prev", "cur", "temp", "head", "left", "right"];
+const POINTER_KEYS = ["prev", "cur", "temp", "head", "left", "right", "slow", "fast", "dummy", "target", "prev2"];
 
 export function LinkedListVisualizer({ nodes, activeNodeIds = [], pointerVars = {} }: LinkedListVisualizerProps) {
   const containerRef = useRef<HTMLDivElement>(null);

@@ -12,6 +12,8 @@ import { VariablesPanel } from "../components/VariablesPanel";
 import { StepControls } from "../components/StepControls";
 import { CodeBlock } from "../components/CodeBlock";
 import { MarkdownText } from "../components/MarkdownText";
+import { ConceptVisual } from "../components/concept/ConceptVisual";
+import { conceptVisualByVariationId } from "../data/conceptVisuals";
 import { useDryRun } from "../hooks/useDryRun";
 
 export function Workspace() {
@@ -57,7 +59,7 @@ export function Workspace() {
           </Panel>
           <PanelResizeHandle className="w-px bg-zinc-200 hover:bg-accent dark:bg-zinc-800" />
           <Panel defaultSize={62} minSize={35}>
-            {content ? <ContentPane content={content} /> : <NoContentPane />}
+            {content ? <ContentPane content={content} /> : <NoContentPane variationId={variation.id} />}
           </Panel>
         </PanelGroup>
       </div>
@@ -102,12 +104,30 @@ function NotesPane({ variation }: { variation: (typeof variations)[number] }) {
   );
 }
 
-function NoContentPane() {
+function NoContentPane({ variationId }: { variationId: string }) {
+  const concept = conceptVisualByVariationId[variationId];
+
+  if (!concept) {
+    return (
+      <div className="flex h-full items-center justify-center px-6 text-center">
+        <p className="max-w-xs text-sm text-zinc-400">
+          Dry run coming soon — concept notes and examples on the left are ready to revise from in the meantime.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex h-full items-center justify-center px-6 text-center">
-      <p className="max-w-xs text-sm text-zinc-400">
-        Dry run coming soon — concept notes and examples on the left are ready to revise from in the meantime.
-      </p>
+    <div className="flex h-full flex-col">
+      <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-2 dark:border-zinc-800">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
+          Concept Visualization
+        </span>
+        <span className="text-[11px] text-zinc-400">Illustrative, not a traced dry run</span>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <ConceptVisual config={concept} />
+      </div>
     </div>
   );
 }

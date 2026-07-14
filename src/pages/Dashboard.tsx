@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import * as Accordion from "@radix-ui/react-accordion";
-import { ChevronDown, Search, Sparkles } from "lucide-react";
+import { ChevronDown, Search, Sparkles, Eye } from "lucide-react";
 import { categories, variations } from "../data/patterns";
 import { contentByVariationId } from "../data/content";
+import { conceptVisualByVariationId } from "../data/conceptVisuals";
 import { useProgressStore } from "../store/useProgressStore";
 import { DifficultyBadge } from "../components/DifficultyBadge";
 import { StatusBadge } from "../components/StatusBadge";
@@ -119,6 +120,7 @@ export function Dashboard() {
                   {catVariations.map((v) => {
                     const st = status[v.id] ?? "Unsolved";
                     const hasContent = !!contentByVariationId[v.id];
+                    const hasConcept = !hasContent && !!conceptVisualByVariationId[v.id];
                     return (
                       <Link
                         key={v.id}
@@ -128,6 +130,9 @@ export function Dashboard() {
                         <div className="flex min-w-0 items-center gap-2">
                           {hasContent && (
                             <Sparkles size={13} className="shrink-0 text-accent" aria-label="Interactive dry run available" />
+                          )}
+                          {hasConcept && (
+                            <Eye size={13} className="shrink-0 text-zinc-400" aria-label="Concept visualization available" />
                           )}
                           <span className="truncate text-sm font-medium text-zinc-800 dark:text-zinc-200">
                             {v.name}
