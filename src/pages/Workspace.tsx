@@ -11,6 +11,7 @@ import { LinkedListVisualizer } from "../components/LinkedListVisualizer";
 import { VariablesPanel } from "../components/VariablesPanel";
 import { StepControls } from "../components/StepControls";
 import { CodeBlock } from "../components/CodeBlock";
+import { MarkdownText } from "../components/MarkdownText";
 import { useDryRun } from "../hooks/useDryRun";
 
 export function Workspace() {
@@ -69,17 +70,15 @@ function NotesPane({ variation }: { variation: (typeof variations)[number] }) {
     <div className="h-full overflow-y-auto px-5 py-5">
       <section className="mb-5">
         <h2 className="mb-1.5 text-xs font-bold uppercase tracking-wide text-zinc-400">Core Idea</h2>
-        <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{variation.coreIdea}</p>
+        <MarkdownText text={variation.coreIdea} />
       </section>
       <section className="mb-5">
         <h2 className="mb-1.5 text-xs font-bold uppercase tracking-wide text-zinc-400">When to Use</h2>
-        <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{variation.whenToUse}</p>
+        <MarkdownText text={variation.whenToUse} />
       </section>
       <section className="mb-5">
         <h2 className="mb-1.5 text-xs font-bold uppercase tracking-wide text-zinc-400">Pitfalls</h2>
-        <div className="whitespace-pre-line text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
-          {variation.pitfalls}
-        </div>
+        <MarkdownText text={variation.pitfalls} />
       </section>
       <section className="mb-5 flex gap-4 font-mono text-xs text-zinc-500 dark:text-zinc-400">
         <span>Time: {variation.timeComplexity}</span>
